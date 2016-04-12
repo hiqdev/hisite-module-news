@@ -1,0 +1,10 @@
+package:
+    type:           yii2-extension
+    name:           hisite-module-news
+    title:          Hisite News Module
+    keywords:       hisite, module, news
+    namespace:      hisite\modules\news
+
+require:
+    hiqdev/hidev-php:       "*"
+    hiqdev/hidev-vendor:    "*"
