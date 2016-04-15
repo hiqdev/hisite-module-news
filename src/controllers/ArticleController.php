@@ -2,39 +2,38 @@
 
 namespace hisite\modules\news\controllers;
 
+use app\controllers\Controller;
+use hipanel\actions\IndexAction;
 use hisite\modules\news\models\Article;
-use hisite\modules\news\models\ArticleSearch;
 use Yii;
+use yii\base\Event;
 use yii\base\ViewContextInterface;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 
 class ArticleController extends Controller implements ViewContextInterface
 {
-    public function actionIndex()
+    public function actions()
     {
-        $searchModel = new ArticleSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return [
+            'index' => [
+                'class' => IndexAction::class,
+                'on beforePerform' => function (Event $event) {
+                    /** @var \hipanel\actions\SearchAction $action */
+                    $action = $event->sender;
+                    $dataProvider = $action->getDataProvider();
+                    $dataProvider->pagination = [
+                        'pageSize' => 5,
+                    ];
+                    $dataProvider->query->joinWith('data')->news();
+                }
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            ]
+        ];
     }
 
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => Article::find()->joinWith('data')->andWhere(['id' => $id])->one(),
         ]);
-    }
-
-    protected function findModel($id)
-    {
-        if (($model = Article::findOne(['id' => $id, 'with_data' => 1])) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

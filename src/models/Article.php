@@ -7,6 +7,32 @@ class Article extends \hipanel\base\Model
 {
     use \hipanel\base\ModelTrait;
 
+    public function getHtmlPurifierConfig()
+    {
+        return [
+            'HTML.AllowedElements' => [
+                'strong' => true,
+                'em' => true,
+                'ul' => true,
+                'ol' => true,
+                'li' => true,
+                'img' => true,
+                'a' => true,
+                'p' => true,
+                'span' => true,
+            ],
+            'HTML.AllowedAttributes' => [
+                '*.style' => true,
+                '*.title' => true,
+                'a.href' => true,
+                'img.src' => true,
+            ],
+            'HTML.Trusted' => true,
+            'HTML.TidyAdd' => [],
+            'HTML.TidyLevel' => 'heavy',
+        ];
+    }
+
     public function rules()
     {
         return [
@@ -20,24 +46,34 @@ class Article extends \hipanel\base\Model
                 'type_name',
                 'is_published',
                 'with_data',
-                'data'
             ], 'safe'],
         ];
     }
 
-    public function afterFind()
+    public function getData()
     {
-        $this->data = $this->resolveLanguage($this->data);
-        parent::afterFind();
+        return $this->hasMany(ArticleData::class, ['article_id' => 'id'])->indexBy('name');
     }
 
-    private function resolveLanguage(array $data)
+    public function getTranslation($language = null)
     {
-        $result = [];
-        foreach ($data as $langId => $source) {
-            $result[$source['name']] = $source;
+        if ($language === null) {
+            $language = \Yii::$app->language;
         }
 
-        return $result;
+        return $this->data[$language];
+    }
+
+    /**
+     * @param array $options
+     * @return ArticleQuery
+     */
+    public static function find($options = [])
+    {
+        $config = [
+            'class'   => ArticleQuery::className(),
+            'options' => $options,
+        ];
+        return \Yii::createObject($config, [get_called_class()]);
     }
 }

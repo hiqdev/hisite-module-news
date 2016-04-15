@@ -2,13 +2,12 @@
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\widgets\ListView;
-
 ?>
 <!-- TESTIMONIALS -->
 <div class="testimonials">
     <div class="row">
         <div class="col-sm-12">
-            <h3><?= Yii::t('hisite', 'Our news') ?></h3>
+            <h3><?= Yii::t('hisite/news', 'Our news') ?></h3>
             <hr class="hr-awesome">
 
             <?= ListView::widget([
@@ -19,12 +18,12 @@ use yii\widgets\ListView;
                         "<div class=\"testimonial-content\">
                             <h3>%s</h3>
                             <span>%s</span>
-                            <p style=\"font-size: smaller\">%s</p>
+                            <p>%s</p>
                         </div>",
-                        Html::a(Html::encode($model->data[Yii::$app->language]['title']), '#'),
+                        Html::a(Html::encode($model->translation->title), ['/news/article/view', 'id' => $model->id]),
                         Yii::$app->formatter->asDate($model->post_date),
-                        StringHelper::countWords($model->data[Yii::$app->language]['short_text']) !== 0 ?
-                            strip_tags($model->data[Yii::$app->language]['short_text']) :
+                        StringHelper::countWords($model->translation->short_text) !== 0 ?
+                            strip_tags($model->translation->short_text) :
                             '',
                         Html::a(Yii::t('hisite/news', 'Read more'), ['/news/article/view', 'id' => $model->id])
                     );

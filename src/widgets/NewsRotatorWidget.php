@@ -18,7 +18,7 @@ class NewsRotatorWidget extends Widget
     public function run()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Article::find(['with_data' => 1]),
+            'query' => Article::find()->joinWith('data')->news(),
             'pagination' => [
                 'pageSize' => 9,
             ],
