@@ -22,7 +22,7 @@ class ArticleSearch extends Article
         return [
             [[
                 'id',
-                'article_name',
+                'name',
                 'author_id',
                 'post_date',
                 'type',

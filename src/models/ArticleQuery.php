@@ -16,11 +16,18 @@ class ArticleQuery extends ActiveQuery
 
     public function joinWith($with)
     {
-        if ($with === 'data') {
-            $this->andWhere(['with_data' => 1]);
+        if ($with === 'texts') {
+            $this->andWhere(['with_texts' => 1]);
         }
 
         return parent::joinWith($with);
+    }
+
+    public function showUnpublished()
+    {
+        $this->andWhere(['show_unpublished' => true]);
+
+        return $this;
     }
 
     /**

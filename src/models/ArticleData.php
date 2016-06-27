@@ -8,19 +8,29 @@ class ArticleData extends ActiveRecord
 {
     use ModelTrait;
 
+    public static function primaryKey()
+    {
+        return ['article_id', 'lang'];
+    }
+
+    public function getIsNewRecord()
+    {
+        return empty($this->getPrimaryKey()['article_id']);
+    }
+
     public function rules()
     {
         return [
             [[
                 'text',
-                'name',
+                'lang',
                 'html_title',
                 'html_keywords',
                 'title',
                 'short_text',
                 'text',
-            ], 'string'],
-            [['article_id', 'lang_id', ], 'integer']
+            ], 'safe', 'on' => ['create', 'update']],
+            [['article_id', 'lang_id'], 'integer', 'on' => ['create', 'update']],
         ];
     }
 }

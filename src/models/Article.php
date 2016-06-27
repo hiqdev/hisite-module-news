@@ -3,9 +3,19 @@
 namespace hisite\modules\news\models;
 
 
+use hipanel\helpers\ArrayHelper;
+
 class Article extends \hipanel\base\Model
 {
-    use \hipanel\base\ModelTrait;
+    use \hipanel\base\ModelTrait {
+        attributes as defaultAttributes;
+    }
+
+    /**
+     * @var ArticleData[]
+     * @see getAddedTexts
+     */
+    private $_texts = [];
 
     public function getHtmlPurifierConfig()
     {
@@ -33,26 +43,57 @@ class Article extends \hipanel\base\Model
         ];
     }
 
+    public function attributes()
+    {
+        $attributes = $this->defaultAttributes();
+        unset($attributes[array_search('texts', $attributes, true)]);
+        return $attributes;
+    }
+
+    public function setOldAttribute($name, $value)
+    {
+        if ($name !== 'texts') {
+            parent::setOldAttribute($name, $value);
+        }
+    }
+
     public function rules()
     {
         return [
-            [[
-                'id',
-                'article_name',
-                'author_id',
-                'post_date',
-                'type',
-                'type_id',
-                'type_name',
-                'is_published',
-                'with_data',
-            ], 'safe'],
+            [['id', 'author_id'], 'integer'],
+            [['name', 'post_date', 'type_label', 'type', 'author', 'realm'], 'safe'],
+            [['is_published'], 'boolean'],
+            [['id'], 'required', 'on' => ['update', 'delete']],
+            [['name'], 'required', 'on' => ['create', 'update']],
+            [['name', 'texts'], 'safe', 'on' => ['create', 'update']],
         ];
     }
 
-    public function getData()
+    /**
+     * @return array|\hiqdev\hiart\ActiveQuery
+     */
+    public function getTexts()
     {
-        return $this->hasMany(ArticleData::class, ['article_id' => 'id'])->indexBy('name');
+        return in_array($this->scenario, ['create', 'update'], true)
+            ? ArrayHelper::toArray($this->_texts)
+            : $this->hasMany(ArticleData::class, ['article_id' => 'id']);
+    }
+
+    public function getAddedTexts()
+    {
+        return $this->_texts;
+    }
+
+    public function setAddedTexts(array $texts)
+    {
+        foreach ($texts as $text) {
+            $this->addText($text);
+        }
+    }
+
+    public function addText(ArticleData $text)
+    {
+        $this->_texts[$text->lang] = $text;
     }
 
     public function getTranslation($language = null)
