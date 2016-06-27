@@ -2,14 +2,13 @@
 
 namespace hisite\modules\news\controllers;
 
-use app\controllers\Controller;
+use hipanel\base\Controller;
 use hipanel\actions\IndexAction;
 use hisite\modules\news\models\Article;
 use Yii;
 use yii\base\Event;
-use yii\base\ViewContextInterface;
 
-class ArticleController extends Controller implements ViewContextInterface
+class ArticleController extends Controller
 {
     public function actions()
     {
