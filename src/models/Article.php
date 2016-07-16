@@ -2,7 +2,6 @@
 
 namespace hisite\modules\news\models;
 
-
 use hipanel\helpers\ArrayHelper;
 
 class Article extends \hipanel\base\Model
@@ -112,7 +111,7 @@ class Article extends \hipanel\base\Model
     public static function find($options = [])
     {
         $config = [
-            'class'   => ArticleQuery::className(),
+            'class'   => ArticleQuery::class,
             'options' => $options,
         ];
         return \Yii::createObject($config, [get_called_class()]);
