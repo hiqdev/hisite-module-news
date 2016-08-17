@@ -3,36 +3,52 @@
 namespace hisite\modules\news\controllers;
 
 use hipanel\base\Controller;
-use hipanel\actions\IndexAction;
 use hisite\modules\news\models\Article;
+use hisite\modules\news\models\ArticleSearch;
+use yii\filters\AccessControl;
 use Yii;
-use yii\base\Event;
 
 class ArticleController extends Controller
 {
-    public function actions()
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
     {
         return [
-            'index' => [
-                'class' => IndexAction::class,
-                'on beforePerform' => function (Event $event) {
-                    /** @var \hipanel\actions\SearchAction $action */
-                    $action = $event->sender;
-                    $dataProvider = $action->getDataProvider();
-                    $dataProvider->pagination = [
-                        'pageSize' => 5,
-                    ];
-                    $dataProvider->query->joinWith('data')->news();
-                }
-
-            ]
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
         ];
+    }
+
+    public function actionIndex()
+    {
+        $searchModel = new ArticleSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = [
+            'pageSize' => 5,
+        ];
+        $dataProvider->query->joinWith('texts')->news();
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => Article::find()->joinWith('data')->andWhere(['id' => $id])->one(),
+            'model' => Article::find()->joinWith('texts')->andWhere(['id' => $id])->one(),
         ]);
     }
 }

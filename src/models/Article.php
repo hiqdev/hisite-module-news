@@ -97,11 +97,16 @@ class Article extends \hipanel\base\Model
 
     public function getTranslation($language = null)
     {
-        if ($language === null) {
-            $language = \Yii::$app->language;
+        $language = ($language === null) ? \Yii::$app->language : $language;
+        if (is_array($this->texts)) {
+            foreach ($this->texts as $k => $translation) {
+                if ($translation->lang === $language)
+                    return $translation;
+
+            }
         }
 
-        return $this->data[$language];
+        return null;
     }
 
     /**
@@ -111,7 +116,7 @@ class Article extends \hipanel\base\Model
     public static function find($options = [])
     {
         $config = [
-            'class'   => ArticleQuery::class,
+            'class' => ArticleQuery::class,
             'options' => $options,
         ];
         return \Yii::createObject($config, [get_called_class()]);

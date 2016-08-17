@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\widgets\ListView;
+/* @var $dataProvider hiqdev\hiart\ActiveDataProvider */
 ?>
 <!-- TESTIMONIALS -->
 <div class="testimonials">
@@ -14,7 +15,7 @@ use yii\widgets\ListView;
                 'dataProvider' => $dataProvider,
                 'itemOptions' => ['class' => 'item'],
                 'itemView' => function ($model) {
-                    return sprintf(
+                    $out = sprintf(
                         "<div class=\"testimonial-content\">
                             <h3>%s</h3>
                             <span>%s</span>
@@ -27,6 +28,8 @@ use yii\widgets\ListView;
                             '',
                         Html::a(Yii::t('hisite/news', 'Read more'), ['/news/article/view', 'id' => $model->id])
                     );
+
+                    return $out;
                 },
                 'layout' => "{items}",
                 'options' => [
