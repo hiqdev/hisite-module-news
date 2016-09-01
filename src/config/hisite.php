@@ -4,11 +4,11 @@ return [
     'components' => [
         'i18n' => [
             'translations' => [
-                'hipanel/dns' => [
+                'hisite/news' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
                     'basePath' => '@hipanel/modules/dns/messages',
                     'fileMap' => [
-                        'hipanel/dns' => 'dns.php',
+                        'hisite/news' => 'news.php',
                     ],
                 ],
             ],
