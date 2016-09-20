@@ -32,7 +32,7 @@ class ArticleController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => Article::find()->joinWith('data')->andWhere(['id' => $id])->one(),
+            'model' => Article::find()->joinWith('texts')->andWhere(['id' => $id])->one(),
         ]);
     }
 }
