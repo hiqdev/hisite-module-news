@@ -39,7 +39,7 @@ use yii\widgets\ListView;
             ]) ?>
 
             <p class="text-center md-mt-50">
-                <?= Html::a(Yii::t('hisite', 'READ ALL NEWS'), ['/news/article/index'], ['class' => 'mtr-btn button-purple ripple btn-lg order-vps has-ripple']) ?>
+                <?= Html::a(Yii::t('hisite/news', 'READ ALL NEWS'), ['/news/article/index'], ['class' => 'mtr-btn button-purple ripple btn-lg order-vps has-ripple']) ?>
             </p>
         </div>
     </div>
