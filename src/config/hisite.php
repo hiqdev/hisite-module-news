@@ -6,9 +6,9 @@ return [
             'translations' => [
                 'hisite/news' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@hipanel/modules/dns/messages',
+                    'basePath' => '@hisite/modules/news/messages',
                     'fileMap' => [
-                        'hisite/news' => 'news.php',
+                        'news' => 'news.php',
                     ],
                 ],
             ],
