@@ -2,6 +2,12 @@
 
 return [
     'components' => [
+        'themeManager' => [
+            'pathMap' => [
+                '@hisite/modules/news/widgets/views' => '$themedWidgetPaths',
+//                '@hisite/modules/news/views' => '$themedViewPaths',
+            ],
+        ],
         'i18n' => [
             'translations' => [
                 'hisite/news' => [
