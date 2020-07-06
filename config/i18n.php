@@ -1,8 +1,10 @@
 <?php
 
+$srcPath = dirname(__DIR__) . '/src';
+
 return [
-    'sourcePath' => '@hisite/modules/news',
-    'messagePath' => '@hisite/modules/news/messages',
+    'sourcePath' => $srcPath,
+    'messagePath' => $srcPath . '/messages',
     'languages' => ['ru'],
     'removeUnused' => false,
     'markUnused' => false,
