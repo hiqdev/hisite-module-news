@@ -4,15 +4,14 @@ return [
     'components' => [
         'themeManager' => [
             'pathMap' => [
-                '@hisite/modules/news/widgets/views' => '$themedWidgetPaths',
-//                '@hisite/modules/news/views' => '$themedViewPaths',
+                dirname(__DIR__) . '/src/widgets/views' => '$themedWidgetPaths',
             ],
         ],
         'i18n' => [
             'translations' => [
                 'hisite/news' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@hisite/modules/news/messages',
+                    'basePath' => dirname(__DIR__) . '/src/messages',
                     'fileMap' => [
                         'news' => 'news.php',
                     ],

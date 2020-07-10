@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'sourcePath' => '@hisite/modules/news',
-    'messagePath' => '@hisite/modules/news/messages',
+    'sourcePath' => dirname(__DIR__) . '/src',
+    'messagePath' => dirname(__DIR__) . '/src/messages',
     'languages' => ['ru'],
     'removeUnused' => false,
     'markUnused' => false,
