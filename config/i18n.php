@@ -1,10 +1,8 @@
 <?php
 
-$srcPath = dirname(__DIR__) . '/src';
-
 return [
-    'sourcePath' => $srcPath,
-    'messagePath' => $srcPath . '/messages',
+    'sourcePath' => dirname(__DIR__) . '/src',
+    'messagePath' => dirname(__DIR__) . '/src/messages',
     'languages' => ['ru'],
     'removeUnused' => false,
     'markUnused' => false,
