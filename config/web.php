@@ -5,6 +5,7 @@ return [
         'themeManager' => [
             'pathMap' => [
                 dirname(__DIR__) . '/src/widgets/views' => '$themedWidgetPaths',
+                dirname(__DIR__) . '/src/views' => '$themedViewPaths',
             ],
         ],
         'i18n' => [

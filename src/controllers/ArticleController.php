@@ -35,7 +35,7 @@ class ArticleController extends Controller
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination = [
-            'pageSize' => 5,
+            'pageSize' => 100,
         ];
         $dataProvider->query->joinWith('texts')->news();
 
