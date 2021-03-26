@@ -6,15 +6,21 @@ use hiqdev\hiart\ActiveQuery;
 
 class ArticleQuery extends ActiveQuery
 {
-
-    public function news()
+    public function news(): self
     {
-        $this->andWhere(['type' => ['promo', 'news']]);
+        $this->andWhere(['type' => ['news']]);
 
         return $this;
     }
 
-    public function joinWith($with)
+    public function promo(): self
+    {
+        $this->andWhere(['type' => ['promo']]);
+
+        return $this;
+    }
+
+    public function joinWith($with): self
     {
         if ($with === 'texts') {
             $this->andWhere(['with_texts' => 1]);
@@ -23,7 +29,7 @@ class ArticleQuery extends ActiveQuery
         return parent::joinWith($with);
     }
 
-    public function showUnpublished()
+    public function showUnpublished(): self
     {
         $this->andWhere(['show_unpublished' => true]);
 
