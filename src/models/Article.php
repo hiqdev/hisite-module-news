@@ -60,7 +60,7 @@ class Article extends \hipanel\base\Model
     {
         return [
             [['id', 'author_id'], 'integer'],
-            [['name', 'post_date', 'type_label', 'type', 'author', 'realm'], 'safe'],
+            [['name', 'post_date', 'type_label', 'type', 'author', 'realm', 'data'], 'safe'],
             [['is_published'], 'boolean'],
             [['id'], 'required', 'on' => ['update', 'delete']],
             [['name'], 'required', 'on' => ['create', 'update']],
